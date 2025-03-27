@@ -117,4 +117,64 @@
     	button:hover {
         	background: linear-gradient(to right, #00e676, #00c853);
     	}
+    	
+    	.magasin-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.magasin-container h1 {
+    text-align: center;
+    color: #aaffaa;
+    margin-bottom: 30px;
+}
+
+.magasin {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-items: center;
+}
+
+.skin {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    width: 250px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+    text-align: center;
+}
+
+.skin img {
+    width: 100%;
+    height: auto;
+}
+
+.skin-info {
+    padding: 10px;
+}
+
+.type, .name, .price {
+    margin: 10px 0;
+}
+
+.type span, .name span, .price span {
+    font-weight: bold;
+}
+
+.acheter-btn {
+    background: linear-gradient(to right, #00cc66, #009944);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-weight: bold;
+}
+
+.acheter-btn:hover {
+    background: linear-gradient(to right, #00e676, #00c853);
+}
     </style>
