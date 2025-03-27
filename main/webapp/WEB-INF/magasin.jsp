@@ -9,7 +9,7 @@
 </head>
 <body>
 
-	<%@ include file="header.jsp" %>
+	<%@ include file="inc/header.jsp" %>
     <div class="magasin-container">
         <h1>Magasin de Skins</h1>
         <div class="magasin">

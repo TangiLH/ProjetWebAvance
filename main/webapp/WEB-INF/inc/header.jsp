@@ -4,8 +4,18 @@
 		<a href="#">Classement</a>
     </div>
         <div class="right">
-        	<a href="<c:url value="Connexion"/>">Connexion</a>
-            <a href="<c:url value="Inscription"/>">Inscription</a>
+        	<c:choose>
+                <c:when test="${not empty sessionScope.user}">
+                    <a href="">Mon Compte</a>
+                    <a href="">Magasin</a>
+                    <a href="">Déconnexion</a>
+                </c:when>
+                <c:otherwise>
+
+                    <a href="">Connexion</a>
+                    <a href="inscription.jsp">Inscription</a>
+                </c:otherwise>
+            </c:choose>
 	</div>
 </div>
     
