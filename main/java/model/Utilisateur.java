@@ -11,10 +11,11 @@ public class Utilisateur {
 	public void setMotdepasse(String motdepasse) {
 		this.motdepasse = motdepasse;
 	}
-	public Utilisateur(String username, int id) {
+	public Utilisateur(String username, int id,String mdp) {
 		super();
 		this.username = username;
 		this.id = id;
+		this.motdepasse=mdp;
 	}
 	public Utilisateur() {
 		

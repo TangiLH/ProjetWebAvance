@@ -11,8 +11,8 @@ import model.Utilisateur;
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	private DAOFactory daoFactory;
-	private static final String SQL_SELECT_PAR_EMAIL = "SELECT id, email, nom, mot_de_passe, date_inscription FROM Utilisateur WHERE email = ?";
-	private static final String SQL_INSERT = "INSERT INTO Utilisateur (email, mot_de_passe, nom, date_inscription) VALUES (?, ?, ?, NOW())";
+	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, userName, password FROM Utilisateur WHERE id = ?";
+	private static final String SQL_INSERT = "INSERT INTO Utilisateur (username, password) VALUES (?, ?)";
 
 	UtilisateurDAOImpl(DAOFactory daoFactory){
 		this.daoFactory=daoFactory;
@@ -50,7 +50,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public Utilisateur trouver(String email) throws DAOException {
+	public Utilisateur trouver(String username) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -59,7 +59,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_EMAIL, false, email );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_PSEUDO, false, username );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if ( resultSet.next() ) {
