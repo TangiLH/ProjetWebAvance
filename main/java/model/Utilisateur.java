@@ -3,6 +3,7 @@ package model;
 public class Utilisateur {
 	private String username;
 	private int id;
+	
 	public Utilisateur(String username, int id) {
 		super();
 		this.username = username;
