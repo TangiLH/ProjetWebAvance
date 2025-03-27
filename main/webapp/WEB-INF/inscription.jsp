@@ -8,7 +8,7 @@
     <%@ include file="style.jsp" %>
 </head>
 <body>
-	<%@ include file="header.jsp" %>
+	<%@ include file="inc/header.jsp" %>
     <div class="container">
         <h1>Inscription</h1>
         <form action="InscriptionServlet" method="post">
