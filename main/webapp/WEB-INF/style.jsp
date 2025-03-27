@@ -82,4 +82,39 @@
         tr:nth-child(even) {
             background: rgba(255, 255, 255, 0.1);
         }
+        
+        	/* Formulaire */
+    	label {
+    		text-align: left;
+        	display: block;
+        	margin-top: 15px;
+        	font-size: 14px;
+    	}
+
+    	input {
+        	width: 100%;
+        	padding: 10px;
+        	margin-top: 5px;
+        	border: none;
+        	border-radius: 5px;
+        	background-color: #222;
+        	color: white;
+    	}
+
+    	button {
+        	width: 100%;
+        	margin-top: 25px;
+        	padding: 12px;
+        	background: linear-gradient(to right, #00cc66, #009944);
+        	border: none;
+        	color: white;
+        	font-weight: bold;
+        	border-radius: 5px;
+        	cursor: pointer;
+        	transition: background 0.3s ease;
+    	}
+
+    	button:hover {
+        	background: linear-gradient(to right, #00e676, #00c853);
+    	}
     </style>
