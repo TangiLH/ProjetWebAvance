@@ -11,7 +11,7 @@
 	<%@ include file="header.jsp" %>
     <div class="container">
         <h1>Inscription</h1>
-        <form action="InscriptionServlet" method="post">
+        <form action="Inscription" method="post">
             <label for="pseudo">Pseudo</label>
             <input type="text" name="pseudo" id="pseudo" required>
 
