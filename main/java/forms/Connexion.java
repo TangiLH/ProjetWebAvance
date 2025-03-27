@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.DAOException;
 import dao.DAOFactory;
 import dao.UtilisateurDAO;
 import dao.UtilisateurDAOImpl;
@@ -63,19 +64,23 @@ public class Connexion extends HttpServlet {
         String pseudo = request.getParameter( CHAMP_PSEUDO );
         String mdp = request.getParameter( CHAMP_MDP );
         
-        Map<String, String> erreurs = verifErreurs(pseudo,mdp);
+        
+        Map<String,String>erreurs=new HashMap<String, String>();
         
         
-        
-        
-        if(erreurs.isEmpty()) {
+        try {
         	Utilisateur utilisateur = this.uDAO.trouver(pseudo);
-            
-            
-            
-            
-            request.setAttribute("id", utilisateur.getId());
+        	request.setAttribute("id", utilisateur.getId());
         }
+        catch(Exception e) {
+        	erreurs.put(CHAMP_PSEUDO,e.getMessage());
+
+        }
+            
+            
+            
+            
+        
         
         
         
@@ -83,9 +88,6 @@ public class Connexion extends HttpServlet {
 	}
 
 
-	private static Map<String, String> verifErreurs(String pseudo, String mdp) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }
