@@ -8,20 +8,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.Item;
+import model.Utilisateur;
 
-public class ItemDAOImpl implements ItemDAO {
+public class JoueurPossedeItemDAOImpl implements JoueurPossedeItemDAO {
 
 	private DAOFactory daoFactory;
 	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, name, prix FROM Item WHERE nom = ?";
-	private static final String SQL_INSERT = "INSERT INTO Item (nom, prix) VALUES (?, ?)";
+	private static final String SQL_INSERT = "INSERT INTO JoueurParticipeItem (id_joueur, id_item) VALUES (?, ?)";
 	private static final String SQL_LIST_ALL="SELECT id,name,prix FROM Item ORDER BY Prix DESC;";
 
-	ItemDAOImpl(DAOFactory daoFactory){
+	JoueurPossedeItemDAOImpl(DAOFactory daoFactory){
 		this.daoFactory=daoFactory;
 	}
 
 	@Override
-	public void creer(Item item) throws DAOException {
+	public void creer(Utilisateur joueur,Item item) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet valeursAutoGenerees = null;
@@ -29,19 +30,18 @@ public class ItemDAOImpl implements ItemDAO {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT, true, item.getNom(),item.getPrix() );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT, true, joueur.getId(),item.getId() );
 			int statut = preparedStatement.executeUpdate();
 			/* Analyse du statut retourné par la requête d'insertion */
 			if ( statut == 0 ) {
-				throw new DAOException( "Échec de la création de l'item, aucune ligne ajoutée dans la table." );
+				throw new DAOException( "Échec de la participation du joueur à la item, aucune ligne ajoutée dans la table." );
 			}
 			/* Récupération de l'id auto-généré par la requête d'insertion */
 			valeursAutoGenerees = preparedStatement.getGeneratedKeys();
 			if ( valeursAutoGenerees.next() ) {
 				/* Puis initialisation de la propriété id du bean Item avec sa valeur */
-				item.setId( valeursAutoGenerees.getInt( 1 ) );
 			} else {
-				throw new DAOException( "Échec de la création de l'item en base, aucun ID auto-généré retourné." );
+				throw new DAOException( "Échec, aucun ID auto-généré retourné." );
 			}
 		} catch ( SQLException e ) {
 			throw new DAOException( e );
@@ -51,32 +51,9 @@ public class ItemDAOImpl implements ItemDAO {
 
 	}
 
-	@Override
-	public Item trouver(String nom) throws DAOException {
-		Connection connexion = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		Item item = null;
-
-		try {
-			/* Récupération d'une connexion depuis la Factory */
-			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_PSEUDO, false, nom );
-			resultSet = preparedStatement.executeQuery();
-			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
-			if ( resultSet.next() ) {
-				item = map( resultSet );
-			}
-		} catch ( SQLException e ) {
-			throw new DAOException( e );
-		} finally {
-			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
-		}
-
-		return item;
-	}
 	
-	public ArrayList<Item> listerItems(){
+	@Override
+	public ArrayList<Item> listerItemsJoueur(Utilisateur joueur){
 		ArrayList<Item>listItems=new ArrayList<>();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
@@ -89,7 +66,7 @@ public class ItemDAOImpl implements ItemDAO {
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			while ( resultSet.next() ) {
-				listItems.add(map( resultSet ));
+				listItems.add(mapItem( resultSet ));
 			}
 		} catch ( SQLException e ) {
 			throw new DAOException( e );
@@ -98,6 +75,31 @@ public class ItemDAOImpl implements ItemDAO {
 		}
 		
 		return listItems;
+	}
+	
+	@Override
+	public ArrayList<Utilisateur> listerJoueursItem(Item item){
+		ArrayList<Utilisateur>listUtilisateur=new ArrayList<>();
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_LIST_ALL, false );
+			resultSet = preparedStatement.executeQuery();
+			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+			while ( resultSet.next() ) {
+				listUtilisateur.add(mapUtilisateur( resultSet ));
+			}
+		} catch ( SQLException e ) {
+			throw new DAOException( e );
+		} finally {
+			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+		}
+		
+		return listUtilisateur;
 	}
 
 	/*
@@ -117,11 +119,24 @@ public class ItemDAOImpl implements ItemDAO {
 	 * mapping) entre une ligne issue de la table des items (un
 	 * ResultSet) et un bean Item.
 	 */
-	private static Item map( ResultSet resultSet ) throws SQLException {
+	private static Item mapItem( ResultSet resultSet ) throws SQLException {
 		Item item = new Item();
 		item.setId( resultSet.getInt( "id" ) );
 		item.setPrix( Integer.valueOf(resultSet.getString( "prix" )) );
 		return item;
+	}
+	
+	/*
+	 * Simple méthode utilitaire permettant de faire la correspondance (le
+	 * mapping) entre une ligne issue de la table des items (un
+	 * ResultSet) et un bean Item.
+	 */
+	private static Utilisateur mapUtilisateur( ResultSet resultSet ) throws SQLException {
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setId( resultSet.getInt( "id" ) );
+		utilisateur.setUsername( (resultSet.getString( "username" )) );
+		utilisateur.setMotdepasse(resultSet.getString("password"));
+		return utilisateur;
 	}
 
 	/* Fermeture silencieuse du resultset */

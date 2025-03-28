@@ -13,6 +13,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	private DAOFactory daoFactory;
 	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, userName, password FROM Utilisateur WHERE id = ?";
 	private static final String SQL_INSERT = "INSERT INTO Utilisateur (username, password) VALUES (?, ?)";
+	
 
 	UtilisateurDAOImpl(DAOFactory daoFactory){
 		this.daoFactory=daoFactory;
