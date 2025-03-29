@@ -11,7 +11,8 @@ import model.Utilisateur;
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	private DAOFactory daoFactory;
-	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, pseudo, password FROM Utilisateur WHERE id = ?";
+
+	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, pseudo, password FROM Utilisateur WHERE pseudo = ?";
 	private static final String SQL_INSERT = "INSERT INTO Utilisateur (pseudo, password) VALUES (?, ?)";
 	
 
@@ -93,12 +94,14 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	 * mapping) entre une ligne issue de la table des utilisateurs (un
 	 * ResultSet) et un bean Utilisateur.
 	 */
-	private static Utilisateur map( ResultSet resultSet ) throws SQLException {
-		Utilisateur utilisateur = new Utilisateur();
-		utilisateur.setId( resultSet.getInt( "id" ) );
-		utilisateur.setPassword( resultSet.getString( "mot_de_passe" ) );
-		return utilisateur;
+	private static Utilisateur map(ResultSet resultSet) throws SQLException {
+	    Utilisateur utilisateur = new Utilisateur();
+	    utilisateur.setId(resultSet.getInt("id"));
+	    utilisateur.setPseudo(resultSet.getString("pseudo")); 
+	    utilisateur.setPassword(resultSet.getString("password"));
+	    return utilisateur;
 	}
+
 
 	/* Fermeture silencieuse du resultset */
 	public static void fermetureSilencieuse( ResultSet resultSet ) {

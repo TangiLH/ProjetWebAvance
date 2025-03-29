@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ page session="true" %>
+    
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,6 +14,14 @@
 </head>
 <body>
 	<%@ include file="inc/header.jsp" %>
+	
+	<c:if test="${not empty sessionScope.utilisateur}">
+    <div style="padding: 10px; background-color: #e6ffe6; border: 1px solid #00cc66; margin: 15px 0;">
+         Bienvenue, <strong>${sessionScope.utilisateur.pseudo}</strong> !
+    </div>
+	</c:if>
+	
+	
     <div class="container">
         <h1>Classement des Joueurs</h1>
         <table>
