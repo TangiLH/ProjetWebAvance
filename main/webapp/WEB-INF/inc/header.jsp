@@ -12,8 +12,8 @@
                 </c:when>
                 <c:otherwise>
 
-                    <a href="">Connexion</a>
-                    <a href="<c:url value="Inscription"/>">Inscription</a>
+                    <a href="Connexion">Connexion</a>
+                    <a href="Inscription">Inscription</a>
                 </c:otherwise>
             </c:choose>
 	</div>
