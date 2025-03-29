@@ -16,7 +16,7 @@
             <input type="text" name="pseudo" id="pseudo" required>
 
             <label for="motdepasse">Mot de passe</label>
-            <input type="password" name="motdepasse" id="motdepasse" required>
+            <input type="password" name="password" id="password" required>
 
             <label for="confirm">Confirmer le mot de passe</label>
             <input type="password" name="confirm" id="confirm" required>

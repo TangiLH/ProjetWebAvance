@@ -134,8 +134,8 @@ public class JoueurPossedeItemDAOImpl implements JoueurPossedeItemDAO {
 	private static Utilisateur mapUtilisateur( ResultSet resultSet ) throws SQLException {
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setId( resultSet.getInt( "id" ) );
-		utilisateur.setUsername( (resultSet.getString( "username" )) );
-		utilisateur.setMotdepasse(resultSet.getString("password"));
+		utilisateur.setPseudo( (resultSet.getString( "username" )) );
+		utilisateur.setPassword(resultSet.getString("password"));
 		return utilisateur;
 	}
 

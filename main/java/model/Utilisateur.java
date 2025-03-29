@@ -1,30 +1,30 @@
 package model;
 
 public class Utilisateur {
-	private String username;
+	private String pseudo;
 	private int id;
-	private String motdepasse;
+	private String password;
 	
-	public String getMotdepasse() {
-		return motdepasse;
+	public String getPassword() {
+		return password;
 	}
-	public void setMotdepasse(String motdepasse) {
-		this.motdepasse = motdepasse;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public Utilisateur(String username, int id,String mdp) {
 		super();
-		this.username = username;
+		this.pseudo = username;
 		this.id = id;
-		this.motdepasse=mdp;
+		this.password=mdp;
 	}
 	public Utilisateur() {
 		
 	}
-	public String getUsername() {
-		return username;
+	public String getPseudo() {
+		return pseudo;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
 	}
 	public int getId() {
 		return id;

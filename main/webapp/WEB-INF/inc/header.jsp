@@ -13,7 +13,7 @@
                 <c:otherwise>
 
                     <a href="">Connexion</a>
-                    <a href="inscription.jsp">Inscription</a>
+                    <a href="<c:url value="Inscription"/>">Inscription</a>
                 </c:otherwise>
             </c:choose>
 	</div>

@@ -11,8 +11,8 @@ import model.Utilisateur;
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	private DAOFactory daoFactory;
-	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, userName, password FROM Utilisateur WHERE id = ?";
-	private static final String SQL_INSERT = "INSERT INTO Utilisateur (username, password) VALUES (?, ?)";
+	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, pseudo, password FROM Utilisateur WHERE id = ?";
+	private static final String SQL_INSERT = "INSERT INTO Utilisateur (pseudo, password) VALUES (?, ?)";
 	
 
 	UtilisateurDAOImpl(DAOFactory daoFactory){
@@ -28,9 +28,10 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT, true, utilisateur.getMotdepasse(),utilisateur.getUsername() );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT, true, utilisateur.getPseudo(),utilisateur.getPassword() );
 			int statut = preparedStatement.executeUpdate();
 			/* Analyse du statut retourné par la requête d'insertion */
+			System.out.println("STATUT"+statut);
 			if ( statut == 0 ) {
 				throw new DAOException( "Échec de la création de l'utilisateur, aucune ligne ajoutée dans la table." );
 			}
@@ -95,7 +96,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	private static Utilisateur map( ResultSet resultSet ) throws SQLException {
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setId( resultSet.getInt( "id" ) );
-		utilisateur.setMotdepasse( resultSet.getString( "mot_de_passe" ) );
+		utilisateur.setPassword( resultSet.getString( "mot_de_passe" ) );
 		return utilisateur;
 	}
 
