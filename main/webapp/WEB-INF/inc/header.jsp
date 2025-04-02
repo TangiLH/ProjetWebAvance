@@ -8,12 +8,12 @@
                 <c:when test="${not empty sessionScope.utilisateur}">
                     <a href="">Mon Compte</a>
                     <a href="<c:url value="Magasin"/>">Magasin</a>
-                    <a href="">Déconnexion</a>
+                    <a href="">DÃ©connexion</a>
                 </c:when>
                 <c:otherwise>
-
                     <a href="<c:url value="Connexion"/>">Connexion</a>
                     <a href="<c:url value="Inscription"/>">Inscription</a>
+
                 </c:otherwise>
             </c:choose>
 	</div>

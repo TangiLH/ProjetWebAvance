@@ -17,6 +17,7 @@ import dao.DAOFactory;
 import dao.UtilisateurDAO;
 import dao.UtilisateurDAOImpl;
 import model.Utilisateur;
+import utils.Password;
 
 @WebServlet("/Connexion")
 public class Connexion extends HttpServlet {
@@ -47,45 +48,49 @@ public class Connexion extends HttpServlet {
 		DAOFactory factory=DAOFactory.getInstance();
 		this.uDAO = factory.getUtilisateurDao();
 		String resultat;
-        Map<String, String> erreurs = new HashMap<String, String>();
+		Map<String, String> erreurs = this.handleRequest(request);
 
-       this.handleRequest(request);
-       if(((Map<String,String>) request.getAttribute(ATT_ERREURS)).isEmpty()) {
-       	this.getServletContext().getRequestDispatcher( AFFICHAGE ).forward( request, response );
-       }
-       else {
-       	this.getServletContext().getRequestDispatcher( CREATION ).forward( request, response );
-       }
-	}
-	
-	public void handleRequest(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		 /* Récupération des champs du formulaire. */
-        String pseudo = request.getParameter( CHAMP_PSEUDO );
-        String mdp = request.getParameter( CHAMP_MDP );
-        
-        
-        Map<String,String>erreurs=new HashMap<String, String>();
-        
-        
-        try {
-        	Utilisateur utilisateur = this.uDAO.trouver(pseudo);
-        	request.setAttribute("id", utilisateur.getId());
-        }
-        catch(Exception e) {
-        	erreurs.put(CHAMP_PSEUDO,e.getMessage());
+		if (erreurs.isEmpty()) {
+		    this.getServletContext().getRequestDispatcher("/WEB-INF/Accueil.jsp").forward(request, response);
+		} else {
+		    this.getServletContext().getRequestDispatcher(CREATION).forward(request, response);
+		}
 
-        }
-            
-            
-            
-            
-        
-        
-        
-        
-        request.setAttribute( ATT_ERREURS, erreurs );
+
 	}
+																
+	public Map<String, String> handleRequest(HttpServletRequest request) {
+	    HttpSession session = request.getSession();
+	    String pseudo = request.getParameter(CHAMP_PSEUDO);
+	    String mdp = request.getParameter(CHAMP_MDP);
+
+	    Map<String, String> erreurs = new HashMap<>();
+	    request.setAttribute(ATT_ERREURS, erreurs); // utile pour afficher les erreurs dans la JSP
+
+	    try {
+	        Utilisateur utilisateur = this.uDAO.trouver(pseudo);
+
+	        if (utilisateur != null) {
+	            Password passwordHasher = new Password();
+	            boolean passwordValide = passwordHasher.authenticate(mdp, utilisateur.getPassword());
+
+	            if (passwordValide) {
+	                session.setAttribute("utilisateur", utilisateur); // Connexion réussie
+	            } else {
+	                erreurs.put(CHAMP_MDP, "Mot de passe incorrect.");
+	            }
+	        } else {
+	            erreurs.put(CHAMP_PSEUDO, "Utilisateur introuvable.");
+	        }
+	    } catch (Exception e) {
+	        erreurs.put("exception", "Erreur inattendue : " + e.getMessage());
+	    }
+	    
+	    System.out.println("Erreurs détectées : " + erreurs);
+	    return erreurs;
+	}
+
+
 
 
 	
