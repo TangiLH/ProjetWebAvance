@@ -6,4 +6,6 @@ public interface UtilisateurDAO {
 	void creer( Utilisateur utilisateur ) throws DAOException;
 
     Utilisateur trouver( String username ) throws DAOException;
+
+	void update(Utilisateur utilisateur) throws DAOException;
 }
