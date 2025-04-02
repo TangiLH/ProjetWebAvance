@@ -50,6 +50,29 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		}
 
 	}
+	
+	@Override
+	public void update(Utilisateur utilisateur) throws DAOException {
+	    Connection connexion = null;
+	    PreparedStatement preparedStatement = null;
+
+	    try {
+	        connexion = daoFactory.getConnection();
+	        String sql = "UPDATE Utilisateur SET money = ? WHERE pseudo = ?";
+	        preparedStatement = connexion.prepareStatement(sql);
+	        preparedStatement.setInt(1, utilisateur.getMoney());
+	        preparedStatement.setString(2, utilisateur.getPseudo());
+
+	        int statut = preparedStatement.executeUpdate();
+	        if (statut == 0) {
+	            throw new DAOException("Échec de la mise à jour de l'utilisateur, aucune ligne modifiée.");
+	        }
+	    } catch (SQLException e) {
+	        throw new DAOException(e);
+	    } finally {
+	        fermeturesSilencieuses(preparedStatement, connexion);
+	    }
+	}
 
 	@Override
 	public Utilisateur trouver(String username) throws DAOException {

@@ -4,7 +4,14 @@ public class Utilisateur {
 	private String pseudo;
 	private int id;
 	private String password;
+	private int money;
 	
+	public int getMoney() {
+		return money;
+	}
+	public void setMoney(int money) {
+		this.money = money;
+	}
 	public String getPassword() {
 		return password;
 	}
