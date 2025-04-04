@@ -1,28 +1,23 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import dao.DAOException;
-import dao.DAOFactory;
+import dao.AbstractDAOFactory;
 import dao.UtilisateurDAO;
-import dao.UtilisateurDAOImpl;
 import model.Utilisateur;
 import utils.Password;
 
 @WebServlet("/Connexion")
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	public static final String CONF_DAO_FACTORY = "daofactory";
 	public static final String ACCUEIL = "/Accueil";
 	public static final String CREATION = "/WEB-INF/Connexion.jsp";
 	public static final String AFFICHAGE = "/WEB-INF/afficherUtilisateur.jsp";
@@ -38,17 +33,16 @@ public class Connexion extends HttpServlet {
        
     }
 
+    public void init() throws ServletException {
+        this.uDAO = ( (AbstractDAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getUtilisateurDao();
+    }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/* Affichage de la page d'inscription */
         this.getServletContext().getRequestDispatcher( CREATION ).forward( request, response );
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DAOFactory factory=DAOFactory.getInstance();
-		this.uDAO = factory.getUtilisateurDao();
-		String resultat;
 		Map<String, String> erreurs = this.handleRequest(request);
 
 		if (erreurs.isEmpty()) {
@@ -60,6 +54,7 @@ public class Connexion extends HttpServlet {
 
 	}
 																
+	@SuppressWarnings("deprecation")
 	public Map<String, String> handleRequest(HttpServletRequest request) {
 	    HttpSession session = request.getSession();
 	    String pseudo = request.getParameter(CHAMP_PSEUDO);
@@ -90,10 +85,5 @@ public class Connexion extends HttpServlet {
 	    System.out.println("Erreurs détectées : " + erreurs);
 	    return erreurs;
 	}
-
-
-
-
-	
 
 }

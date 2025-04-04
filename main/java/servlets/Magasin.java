@@ -6,11 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import dao.DAOFactory;
+import dao.AbstractDAOFactory;
 import dao.ItemDAO;
 import dao.JoueurPossedeItemDAO;
-import dao.UtilisateurDAO;
 import model.Utilisateur;
 
 /**
@@ -19,20 +17,21 @@ import model.Utilisateur;
 @WebServlet("/Magasin")
 public class Magasin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-
-	private DAOFactory daoFactory;
+	public static final String CONF_DAO_FACTORY = "daofactory";
 	private ItemDAO itemDAO;
 	private JoueurPossedeItemDAO jpiDAO;
 	
 
 	public Magasin() {
 		super();
-		this.daoFactory= DAOFactory.getInstance();
-		this.itemDAO = daoFactory.getItemDao();
-		this.jpiDAO = daoFactory.getJoueurPossedeItemDAO();
+		
 
 	}
+	
+	public void init() throws ServletException {
+        this.jpiDAO = ( (AbstractDAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getJoueurPossedeItemDAO();
+        this.itemDAO = ( (AbstractDAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getItemDao();
+    }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Récupérer l'utilisateur de la session

@@ -7,27 +7,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import dao.DAOFactory;
+import dao.AbstractDAOFactory;
 import dao.UtilisateurDAO;
 import forms.InscriptionForm;
 import model.Utilisateur;
-import utils.Password;
 
 @WebServlet("/Inscription")
 public class Inscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public static final String CONF_DAO_FACTORY = "daofactory";
 	public static final String ACCUEIL = "/Accueil";
-	private static final String CHAMP_PSEUDO="pseudo";
-	private static final String CHAMP_MDP="password";
-	
 	private InscriptionForm inscriptionForm;
-	private DAOFactory daoFactory;
 	private UtilisateurDAO utilisateurDAO;
+	
+	public void init() throws ServletException {
+        this.utilisateurDAO = ( (AbstractDAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getUtilisateurDao();
+    }
+
     public Inscription() {
         super();
-        
-        
         
     }
 
@@ -36,11 +34,8 @@ public class Inscription extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.daoFactory= DAOFactory.getInstance();
-        this.utilisateurDAO=daoFactory.getUtilisateurDao();
         this.inscriptionForm = new InscriptionForm(utilisateurDAO);
 		HttpSession session = request.getSession();
-		System.out.println(request.getParameter(CHAMP_PSEUDO));
 		Utilisateur utilisateur=inscriptionForm.creerUtilisateur(request);
 		
 		if (utilisateur != null) {

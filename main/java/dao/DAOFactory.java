@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DAOFactory {
+public class DAOFactory extends AbstractDAOFactory{
 
     private static final String FICHIER_PROPERTIES       = "dao/dao.properties";
     private static final String PROPERTY_URL             = "url";
@@ -26,10 +26,8 @@ public class DAOFactory {
         this.password = password;
     }
 
-    /*
-     * Méthode chargée de récupérer les informations de connexion à la base de
-     * données, charger le driver JDBC et retourner une instance de la Factory
-     */
+    
+    
     public static DAOFactory getInstance() throws DAOConfigurationException {
         Properties properties = new Properties();
         String url;

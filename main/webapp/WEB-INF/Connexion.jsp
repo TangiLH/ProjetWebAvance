@@ -17,7 +17,7 @@
                         
 				<h1>Connexion</h1>
     
-                    <label for="userName">Pseudo <span class="requis">*</span></label>
+                    <label for="userName">Pseudo <span class="requis"></span></label>
                     <input type="text" id="userName" name="userName" value="<c:out value="${param.userName}"/>" size="20" maxlength="20" />
                     <span class="erreur">${erreursUtilisateur['userName']}</span>
                     <br />
@@ -27,7 +27,7 @@
                     <span class="erreur">${erreursUtilisateur['mdp']}</span>
                     <br />
                  
-                <input type="submit" value="Valider"  />
+                <button type="submit">Se Connecter</button>
             </form>
         </div>
 </body>
