@@ -24,7 +24,6 @@
 				<div class="skin">
 					<c:set var="formattedName"
 						value="${fn:toLowerCase(fn:replace(item.nom, ' ', ''))}" />
-					<img src="img/${formattedName}.png" alt="${formattedName}">
 					<c:if test="${fn:contains(formattedName, 'mur')}">
 
 					</c:if>
@@ -112,14 +111,8 @@
 				function() {
 					document.getElementById('popup').style.display = 'none';
 				});
-		
-		
 
 		window.onclick = function(event) {
-		    let popup = document.getElementById('popup');
-		    if (event.target == popup) {
-		        popup.style.display = 'none';
-		    }
 			let popup = document.getElementById('popup');
 			if (event.target == popup) {
 				popup.style.display = 'none';

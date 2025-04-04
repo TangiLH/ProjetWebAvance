@@ -47,10 +47,10 @@ body {
 .money-display {
     display: flex;
     align-items: center;
-    background: linear-gradient(45deg, #f4c542, #f4a542); /* Dï¿½gradï¿½ de couleur pour un effet plus dynamique */
+    background: linear-gradient(45deg, #f4c542, #f4a542); /* Dégradé de couleur pour un effet plus dynamique */
     color: white;
-    padding: 4px 15px; /* Plus de padding pour faire ï¿½cho ï¿½ un bouton */
-    border-radius: 30px; /* Bordure arrondie pour ressembler ï¿½ un bouton */
+    padding: 4px 15px; /* Plus de padding pour faire écho à un bouton */
+    border-radius: 30px; /* Bordure arrondie pour ressembler à un bouton */
     font-weight: bold;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.4); /* Ombre pour mettre en valeur */
     transition: all 0.3s ease; /* Transition douce pour les effets au survol */
@@ -59,25 +59,25 @@ body {
 }
 
 .money-display:hover {
-    background: linear-gradient(45deg, #f4a542, #f4c542); /* Changement de dï¿½gradï¿½ au survol */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Ombre plus prononcï¿½e au survol */
+    background: linear-gradient(45deg, #f4a542, #f4c542); /* Changement de dégradé au survol */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Ombre plus prononcée au survol */
 }
 
-/* Style de l'icï¿½ne (pour la rendre plus dynamique) */
+/* Style de l'icône (pour la rendre plus dynamique) */
 .money-icon {
-    width: 25px; /* Taille un peu plus grande pour l'icï¿½ne */
+    width: 25px; /* Taille un peu plus grande pour l'icône */
     height: 25px;
-    margin-right: 10px; /* Espacement plus large entre l'icï¿½ne et le texte */
+    margin-right: 10px; /* Espacement plus large entre l'icône et le texte */
 }
 
-/* Style de l'icï¿½ne au survol */
+/* Style de l'icône au survol */
 .money-display:hover .money-icon {
-    transform: rotate(15deg); /* Effet de rotation au survol pour l'icï¿½ne */
+    transform: rotate(15deg); /* Effet de rotation au survol pour l'icône */
     transition: transform 0.3s ease;
 }
 
 
-/* Style pour le bouton de dï¿½connexion */
+/* Style pour le bouton de déconnexion */
 .logout-button {
     display: flex;
     align-items: center;
@@ -98,7 +98,7 @@ body {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
-/* Style pour l'icï¿½ne du bouton de dï¿½connexion */
+/* Style pour l'icône du bouton de déconnexion */
 .logout-button svg {
     width: 20px;
     height: 20px;
@@ -215,7 +215,6 @@ button:hover {
 .skin {
 	background-color: rgba(0, 0, 0, 0.7);
 	border-radius: 10px;
-	width: 300px;
 	width: 20em;
 	overflow: hidden;
 	box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
@@ -229,8 +228,6 @@ button:hover {
 }
 
 .skin img {
-	width: 200px; /* Largeur de l'image */
-	height: 200px; /* Hauteur de l'image */
 	transform: rotate(-90deg);
 	height: 10em; /* Hauteur de l'image */
 	object-fit: cover;
