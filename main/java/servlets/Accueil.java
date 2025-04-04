@@ -22,7 +22,6 @@ import dao.UtilisateurDAO;
 @WebServlet("/Accueil")
 public class Accueil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String ACCUEIL = "/Accueil";
 	private DAOFactory daoFactory;
 	private JoueurParticipePartieDAO jppDAO;
 	private PartieDAO partieDAO;
@@ -31,7 +30,10 @@ public class Accueil extends HttpServlet {
 
 	public Accueil() {
 		super();
-		
+		this.daoFactory= DAOFactory.getInstance();
+		this.jppDAO =  daoFactory.getJoueurParticipeDAO();
+		this.partieDAO = daoFactory.getPartieDao();
+		this.utilisateurDAO = daoFactory.getUtilisateurDao() ;
 		
 		
 		
@@ -39,10 +41,6 @@ public class Accueil extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.daoFactory= DAOFactory.getInstance();
-		this.jppDAO =  daoFactory.getJoueurParticipeDAO();
-		this.partieDAO = daoFactory.getPartieDao();
-		this.utilisateurDAO = daoFactory.getUtilisateurDao() ;
 		List<Map<String, Object>> classement = jppDAO.getScores();
 
 	    // Trier par ordre décroissant des scores
@@ -52,7 +50,7 @@ public class Accueil extends HttpServlet {
 		
 		
 		
-	    response.sendRedirect(request.getContextPath() + ACCUEIL);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/Accueil.jsp").forward(request, response);
 		
 		
 		
