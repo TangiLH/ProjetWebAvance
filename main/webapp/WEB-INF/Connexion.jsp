@@ -23,7 +23,7 @@
                     <br />
                     
                     <label for="mdp">Mot de Passe </label>
-                    <input type="text" id="mdp" name="mdp" value="<c:out value="${param.mdp}"/>" size="20" maxlength="20" />
+                    <input type="password" id="mdp" name="mdp" value="<c:out value="${param.mdp}"/>" size="20" maxlength="20" />
                     <span class="erreur">${erreursUtilisateur['mdp']}</span>
                     <br />
                  

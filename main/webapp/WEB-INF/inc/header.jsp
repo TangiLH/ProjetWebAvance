@@ -7,7 +7,7 @@
 	<div class="right">
 		<c:choose>
 			<c:when test="${not empty sessionScope.utilisateur}">
-				<a href="">Mon Compte</a>
+				<a href="<c:url value="Compte"/>">Mon Compte</a>
 				<a href="<c:url value="Magasin"/>">Magasin</a>
 				<a class="money-display">
 					<img src="img/money-icon.png" alt="Money" class="money-icon"/>

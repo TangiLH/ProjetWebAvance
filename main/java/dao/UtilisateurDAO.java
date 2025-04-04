@@ -10,4 +10,8 @@ public interface UtilisateurDAO {
 	void update(Utilisateur utilisateur) throws DAOException;
 
 	Utilisateur findByID(int id) throws DAOException;
+	
+	void changePassword(Utilisateur utilisateur);
+	
+	void addMoney(Utilisateur utilisateur,String montant);
 }

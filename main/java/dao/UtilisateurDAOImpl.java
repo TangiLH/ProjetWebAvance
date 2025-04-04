@@ -15,6 +15,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, pseudo, password FROM Utilisateur WHERE pseudo = ?";
 	private static final String SQL_INSERT = "INSERT INTO Utilisateur (pseudo, password) VALUES (?, ?)";
 	private static final String SQL_SELECT_PAR_ID = "SELECT id, pseudo, password FROM Utilisateur WHERE id = ?";
+	private static final String SQL_CHANGE_PASSWORD = "UPDATE Utilisateur SET password = ? WHERE id = ?";
+
+	private static final String SQL_ADD_MONEY = "UPDATE Utilisateur SET	money = ? WHERE id = ?";
 
 	UtilisateurDAOImpl(DAOFactory daoFactory){
 		this.daoFactory=daoFactory;
@@ -75,6 +78,46 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	    }
 	}
 
+	@Override
+	public void changePassword(Utilisateur utilisateur) {
+		String password=utilisateur.getPassword();
+		Connection connexion = null;
+	    PreparedStatement preparedStatement = null;
+
+	    try {
+	        connexion = daoFactory.getConnection();
+	        preparedStatement = initialisationRequetePreparee( connexion, SQL_CHANGE_PASSWORD, true, password,utilisateur.getId() );
+
+	        int statut = preparedStatement.executeUpdate();
+	        if (statut == 0) {
+	            throw new DAOException("Échec du changement de mot de passe, aucune ligne modifiée.");
+	        }
+	    } catch (SQLException e) {
+	        throw new DAOException(e);
+	    } finally {
+	        fermeturesSilencieuses(preparedStatement, connexion);
+	    }
+	}
+	
+	@Override
+	public void addMoney(Utilisateur utilisateur,String montant) {
+		Connection connexion = null;
+	    PreparedStatement preparedStatement = null;
+
+	    try {
+	        connexion = daoFactory.getConnection();
+	        preparedStatement = initialisationRequetePreparee( connexion, SQL_ADD_MONEY, true,montant,utilisateur.getId() );
+
+	        int statut = preparedStatement.executeUpdate();
+	        if (statut == 0) {
+	            throw new DAOException("Échec de l'ajout de fonds, aucune ligne modifiée.");
+	        }
+	    } catch (SQLException e) {
+	        throw new DAOException(e);
+	    } finally {
+	        fermeturesSilencieuses(preparedStatement, connexion);
+	    }
+	}
 	@Override
 	public Utilisateur trouver(String username) throws DAOException {
 		Connection connexion = null;
