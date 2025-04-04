@@ -17,6 +17,7 @@ import utils.Password;
 @WebServlet("/Inscription")
 public class Inscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public static final String ACCUEIL = "/Accueil";
 	private static final String CHAMP_PSEUDO="pseudo";
 	private static final String CHAMP_MDP="password";
 	
@@ -43,9 +44,9 @@ public class Inscription extends HttpServlet {
 		Utilisateur utilisateur=inscriptionForm.creerUtilisateur(request);
 		
 		if (utilisateur != null) {
-	        session.setAttribute("utilisateur", utilisateur); // Enregistre l'utilisateur dans la session
+	        session.setAttribute("utilisateur", utilisateur);
 	    }
-		request.getServletContext().getRequestDispatcher("/WEB-INF/Accueil.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath() + ACCUEIL);
 	}
 
 }
