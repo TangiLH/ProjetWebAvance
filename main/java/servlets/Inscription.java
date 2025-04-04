@@ -33,6 +33,8 @@ public class Inscription extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		request.getServletContext().getRequestDispatcher("/WEB-INF/Inscription.jsp").forward(request, response);
 	}
 
@@ -40,10 +42,6 @@ public class Inscription extends HttpServlet {
 		HttpSession session = request.getSession();
 		System.out.println(request.getParameter(CHAMP_PSEUDO));
 		Utilisateur utilisateur=inscriptionForm.creerUtilisateur(request);
-		
-		if (utilisateur != null) {
-	        session.setAttribute("utilisateur", utilisateur); // Enregistre l'utilisateur dans la session
-	    }
 		request.getServletContext().getRequestDispatcher("/WEB-INF/Accueil.jsp").forward(request, response);
 	}
 
