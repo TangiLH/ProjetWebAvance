@@ -13,8 +13,8 @@
 					<img src="img/money-icon.png" alt="Money" class="money-icon"/>
 					<span>${sessionScope.utilisateur.money}</span>
 				</a>
-				<a href="" class="logout-button">
-                    <!-- Icône SVG pour déconnexion -->
+				<a href="Deconnexion" class="logout-button">
+                    
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="white">
                         <path d="M10 17L15 12L10 7V10H3V14H10V17ZM21 5H13V7H21V17H13V19H21C22.1 19 23 18.1 23 17V7C23 5.9 22.1 5 21 5Z"/>
                     </svg>

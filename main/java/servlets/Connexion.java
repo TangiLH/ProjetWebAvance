@@ -23,6 +23,7 @@ import utils.Password;
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	public static final String ACCUEIL = "/Accueil";
 	public static final String CREATION = "/WEB-INF/Connexion.jsp";
 	public static final String AFFICHAGE = "/WEB-INF/afficherUtilisateur.jsp";
     public static final String CHAMP_PSEUDO = "userName";
@@ -34,7 +35,7 @@ public class Connexion extends HttpServlet {
     
     public Connexion() {
         super();
-        // TODO Auto-generated constructor stub
+       
     }
 
 	
@@ -51,7 +52,7 @@ public class Connexion extends HttpServlet {
 		Map<String, String> erreurs = this.handleRequest(request);
 
 		if (erreurs.isEmpty()) {
-		    this.getServletContext().getRequestDispatcher("/WEB-INF/Accueil.jsp").forward(request, response);
+			response.sendRedirect(request.getContextPath() + ACCUEIL);
 		} else {
 		    this.getServletContext().getRequestDispatcher(CREATION).forward(request, response);
 		}
