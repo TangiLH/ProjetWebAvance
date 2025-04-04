@@ -44,6 +44,74 @@ body {
 	color: #00e676;
 }
 
+.money-display {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(45deg, #f4c542, #f4a542); /* D�grad� de couleur pour un effet plus dynamique */
+    color: white;
+    padding: 4px 15px; /* Plus de padding pour faire �cho � un bouton */
+    border-radius: 30px; /* Bordure arrondie pour ressembler � un bouton */
+    font-weight: bold;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4); /* Ombre pour mettre en valeur */
+    transition: all 0.3s ease; /* Transition douce pour les effets au survol */
+    margin-right: 10px;
+    cursor: pointer; /* Curseur de type bouton */
+}
+
+.money-display:hover {
+    background: linear-gradient(45deg, #f4a542, #f4c542); /* Changement de d�grad� au survol */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Ombre plus prononc�e au survol */
+}
+
+/* Style de l'ic�ne (pour la rendre plus dynamique) */
+.money-icon {
+    width: 25px; /* Taille un peu plus grande pour l'ic�ne */
+    height: 25px;
+    margin-right: 10px; /* Espacement plus large entre l'ic�ne et le texte */
+}
+
+/* Style de l'ic�ne au survol */
+.money-display:hover .money-icon {
+    transform: rotate(15deg); /* Effet de rotation au survol pour l'ic�ne */
+    transition: transform 0.3s ease;
+}
+
+
+/* Style pour le bouton de d�connexion */
+.logout-button {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(45deg, #ff3333, #cc0000); 
+    color: white;
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-weight: bold;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    margin-right: 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.logout-button:hover {
+    background: linear-gradient(45deg, #ff6666, #ff3333);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Style pour l'ic�ne du bouton de d�connexion */
+.logout-button svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px; 
+}
+
+
+.logout-button:hover svg {
+    transform: rotate(15deg); 
+    transition: transform 0.3s ease;
+}
+
+
 /* Conteneur principal */
 .container {
 	background-color: rgba(0, 0, 0, 0.7);
@@ -137,24 +205,34 @@ button:hover {
 }
 
 .magasin {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 20px;
-	justify-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; 
+    justify-content: center; 
+    padding: 20px;
 }
 
 .skin {
 	background-color: rgba(0, 0, 0, 0.7);
 	border-radius: 10px;
 	width: 300px;
+	width: 20em;
 	overflow: hidden;
 	box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
 	text-align: center;
 }
 
+.serpent {
+	display: flex; 
+    align-items: center;
+    padding: 0.5em;
+}
+
 .skin img {
 	width: 200px; /* Largeur de l'image */
 	height: 200px; /* Hauteur de l'image */
+	transform: rotate(-90deg);
+	height: 10em; /* Hauteur de l'image */
 	object-fit: cover;
 }
 

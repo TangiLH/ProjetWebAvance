@@ -77,6 +77,10 @@ public class DAOFactory {
         return new UtilisateurDAOImpl( this );
     }
     
+    public PartieDAO getPartieDao() {
+    	return new PartieDAOImpl(this);
+    }
+    
     
     public ItemDAO getItemDao() {
     	return new ItemDAOImpl(this);
@@ -85,5 +89,9 @@ public class DAOFactory {
     public JoueurPossedeItemDAO getJoueurPossedeItemDAO() {
 		return new JoueurPossedeItemDAOImpl(this);
     	
+    }
+    
+    public JoueurParticipePartieDAO getJoueurParticipeDAO() {
+    	return new JoueurParticipePartieDAOImpl(this);
     }
 }

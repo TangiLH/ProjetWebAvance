@@ -3,13 +3,14 @@ package model;
 public class Partie {
 	private int id;
 	private String date;
+	
+	
 	public Partie(int id, String date) {
 		super();
 		this.id = id;
 		this.date = date;
 	}
 	public Partie() {
-		// TODO Auto-generated constructor stub
 	}
 	public int getId() {
 		return id;
@@ -23,5 +24,5 @@ public class Partie {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
+
 }

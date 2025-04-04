@@ -25,6 +25,26 @@
 					<c:set var="formattedName"
 						value="${fn:toLowerCase(fn:replace(item.nom, ' ', ''))}" />
 					<img src="img/${formattedName}.png" alt="${formattedName}">
+					<c:if test="${fn:contains(formattedName, 'mur')}">
+
+					</c:if>
+					<c:choose>
+						<c:when test="${fn:contains(formattedName, 'mur')}">
+							<div class="mur">
+								<img src="img/${formattedName}.png" alt="${formattedName}">
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="serpent">
+								<img src="img/${formattedName}.png" alt="${formattedName}">
+
+								<img src="img/${formattedName}corps.png"
+									alt="${formattedName} corps">
+							</div>
+						</c:otherwise>
+					</c:choose>
+
+
 					<div class="skin-info">
 						<c:set var="words" value="${fn:split(item.nom, ' ')}" />
 						<c:if test="${fn:length(words) > 1}">
@@ -94,11 +114,16 @@
 				});
 		
 		
+
 		window.onclick = function(event) {
 		    let popup = document.getElementById('popup');
 		    if (event.target == popup) {
 		        popup.style.display = 'none';
 		    }
+			let popup = document.getElementById('popup');
+			if (event.target == popup) {
+				popup.style.display = 'none';
+			}
 		};
 	</script>
 </body>
