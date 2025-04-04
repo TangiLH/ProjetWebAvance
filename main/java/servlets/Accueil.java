@@ -34,6 +34,7 @@ public class Accueil extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getSession();
 
 		List<Map<String, Object>> classement = jppDAO.getScores();
 

@@ -12,7 +12,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	private DAOFactory daoFactory;
 
-	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, pseudo, password FROM Utilisateur WHERE pseudo = ?";
+	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, pseudo, password,money FROM Utilisateur WHERE pseudo = ?";
 	private static final String SQL_INSERT = "INSERT INTO Utilisateur (pseudo, password) VALUES (?, ?)";
 	private static final String SQL_SELECT_PAR_ID = "SELECT id, pseudo, password FROM Utilisateur WHERE id = ?";
 	private static final String SQL_CHANGE_PASSWORD = "UPDATE Utilisateur SET password = ? WHERE id = ?";
@@ -190,6 +190,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	    utilisateur.setId(resultSet.getInt("id"));
 	    utilisateur.setPseudo(resultSet.getString("pseudo")); 
 	    utilisateur.setPassword(resultSet.getString("password"));
+	    utilisateur.setMoney(Integer.valueOf(resultSet.getString("money")));
 	    return utilisateur;
 	}
 

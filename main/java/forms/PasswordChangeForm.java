@@ -86,7 +86,7 @@ public class PasswordChangeForm {
 	}
 
 	public void addMoney(HttpServletRequest request) {
-		System.out.println("adding money");
+		//System.out.println("adding money");
 		String montant = getValeurChamp(request,"montant");
 		Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
 
