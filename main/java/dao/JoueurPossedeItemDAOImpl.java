@@ -13,13 +13,9 @@ import model.Utilisateur;
 public class JoueurPossedeItemDAOImpl implements JoueurPossedeItemDAO {
 
 	private DAOFactory daoFactory;
-	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, nom, prix FROM Item WHERE nom = ?";
-	private static final String SQL_INSERT = "INSERT INTO JoueurPossedeItem (id_joueur, id_item) VALUES (?, ?)";
-	private static final String SQL_LIST_ALL="SELECT id,nom,prix FROM Item ORDER BY Prix DESC;";
-	private static final String SQL_SELECT_ITEMS_JOUEUR = 
-		    "SELECT i.id, i.nom, i.prix FROM Item i " +
-		    "JOIN JoueurPossedeItem jpi ON i.id = jpi.id_item " +
-		    "WHERE jpi.id_joueur = ?";
+	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, name, prix FROM Item WHERE nom = ?";
+	private static final String SQL_INSERT = "INSERT INTO JoueurParticipeItem (id_joueur, id_item) VALUES (?, ?)";
+	private static final String SQL_LIST_ALL="SELECT id,name,prix FROM Item ORDER BY Prix DESC;";
 
 	JoueurPossedeItemDAOImpl(DAOFactory daoFactory){
 		this.daoFactory=daoFactory;
@@ -66,7 +62,7 @@ public class JoueurPossedeItemDAOImpl implements JoueurPossedeItemDAO {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_ITEMS_JOUEUR, false, joueur.getId());
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_LIST_ALL, false );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			while ( resultSet.next() ) {
@@ -126,7 +122,6 @@ public class JoueurPossedeItemDAOImpl implements JoueurPossedeItemDAO {
 	private static Item mapItem( ResultSet resultSet ) throws SQLException {
 		Item item = new Item();
 		item.setId( resultSet.getInt( "id" ) );
-		item.setNom(resultSet.getString("nom"));
 		item.setPrix( Integer.valueOf(resultSet.getString( "prix" )) );
 		return item;
 	}

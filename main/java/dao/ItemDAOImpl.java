@@ -12,9 +12,9 @@ import model.Item;
 public class ItemDAOImpl implements ItemDAO {
 
 	private DAOFactory daoFactory;
-	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, nom, prix FROM Item WHERE nom = ?";
+	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, name, prix FROM Item WHERE nom = ?";
 	private static final String SQL_INSERT = "INSERT INTO Item (nom, prix) VALUES (?, ?)";
-	private static final String SQL_LIST_ALL="SELECT id,nom,prix FROM Item ORDER BY Prix DESC;";
+	private static final String SQL_LIST_ALL="SELECT id,name,prix FROM Item ORDER BY Prix DESC;";
 
 	ItemDAOImpl(DAOFactory daoFactory){
 		this.daoFactory=daoFactory;
@@ -120,7 +120,6 @@ public class ItemDAOImpl implements ItemDAO {
 	private static Item map( ResultSet resultSet ) throws SQLException {
 		Item item = new Item();
 		item.setId( resultSet.getInt( "id" ) );
-		item.setNom(resultSet.getString("nom"));
 		item.setPrix( Integer.valueOf(resultSet.getString( "prix" )) );
 		return item;
 	}
