@@ -14,7 +14,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, pseudo, password FROM Utilisateur WHERE pseudo = ?";
 	private static final String SQL_INSERT = "INSERT INTO Utilisateur (pseudo, password) VALUES (?, ?)";
-	
+	private static final String SQL_SELECT_PAR_ID = "SELECT id, pseudo, password FROM Utilisateur WHERE id = ?";
 
 	UtilisateurDAOImpl(DAOFactory daoFactory){
 		this.daoFactory=daoFactory;
@@ -86,6 +86,31 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_PSEUDO, false, username );
+			resultSet = preparedStatement.executeQuery();
+			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+			if ( resultSet.next() ) {
+				utilisateur = map( resultSet );
+			}
+		} catch ( SQLException e ) {
+			throw new DAOException( e );
+		} finally {
+			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+		}
+
+		return utilisateur;
+	}
+	
+	@Override
+	public Utilisateur findByID(int id) throws DAOException {
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		Utilisateur utilisateur = null;
+
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_PAR_ID, false, id );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if ( resultSet.next() ) {

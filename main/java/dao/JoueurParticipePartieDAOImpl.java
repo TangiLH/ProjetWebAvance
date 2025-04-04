@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import model.Item;
 import model.Partie;
@@ -15,15 +18,17 @@ public class JoueurParticipePartieDAOImpl implements JoueurParticipePartieDAO {
 
 	private DAOFactory daoFactory;
 	private static final String SQL_SELECT_PAR_PSEUDO = "SELECT id, name, prix FROM Item WHERE nom = ?";
-	private static final String SQL_INSERT = "INSERT INTO JoueurParticipePartie (id_joueur, id_partie) VALUES (?, ?)";
+	private static final String SQL_INSERT = "INSERT INTO JoueurParticipePartie (id_joueur, id_partie, score) VALUES (?, ?, ?)";
 	private static final String SQL_LIST_ALL="SELECT id,name,prix FROM Item ORDER BY Prix DESC;";
-
+	private static final String SQL_SELECT_ALL = "SELECT * FROM JoueurParticipePartie";
+	
+	
 	JoueurParticipePartieDAOImpl(DAOFactory daoFactory){
 		this.daoFactory=daoFactory;
 	}
 
 	@Override
-	public void creer(Utilisateur joueur,Partie partie) throws DAOException {
+	public void creer(Utilisateur joueur,Partie partie, int score) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet valeursAutoGenerees = null;
@@ -31,7 +36,8 @@ public class JoueurParticipePartieDAOImpl implements JoueurParticipePartieDAO {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT, true, joueur.getId(),partie.getId() );
+			
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT, true, joueur.getId(),partie.getId() , score);
 			int statut = preparedStatement.executeUpdate();
 			/* Analyse du statut retourné par la requête d'insertion */
 			if ( statut == 0 ) {
@@ -51,6 +57,46 @@ public class JoueurParticipePartieDAOImpl implements JoueurParticipePartieDAO {
 		}
 
 	}
+	
+	@Override
+	public List<Map<String, Object>> getScores() {
+	    List<Map<String, Object>> scores = new ArrayList<>();
+	    Connection connexion = null;
+	    Statement statement = null;
+	    ResultSet resultSet = null;
+
+	    try {
+	        connexion = daoFactory.getConnection();
+	        statement = connexion.createStatement();
+	        resultSet = statement.executeQuery(
+	            "SELECT u.pseudo, jpp.score, p.datePartie " +
+	            "FROM JoueurParticipePartie jpp " +
+	            "JOIN Utilisateur u ON jpp.id_joueur = u.id " +
+	            "JOIN Partie p ON jpp.id_partie = p.id " +
+	            "WHERE jpp.score = (" +
+	            "   SELECT MAX(score) FROM JoueurParticipePartie WHERE id_joueur = jpp.id_joueur" +
+	            ")"
+	        );
+
+	        while (resultSet.next()) {
+	            Map<String, Object> joueurData = new HashMap<>();
+	            joueurData.put("pseudo", resultSet.getString("pseudo"));
+	            joueurData.put("score", resultSet.getInt("score"));
+	            joueurData.put("date", resultSet.getString("datePartie")); // La date de la partie
+
+	            scores.add(joueurData);
+	        }
+
+	    } catch (SQLException e) {
+	        throw new DAOException(e);
+	    } finally {
+	        fermeturesSilencieuses(resultSet, statement, connexion);
+	    }
+
+	    return scores;
+	}
+
+
 
 	
 	@Override

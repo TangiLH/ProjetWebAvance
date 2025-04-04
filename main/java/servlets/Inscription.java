@@ -26,10 +26,8 @@ public class Inscription extends HttpServlet {
     public Inscription() {
         super();
         
-        this.daoFactory= DAOFactory.getInstance();
-        this.utilisateurDAO=daoFactory.getUtilisateurDao();
-        this.inscriptionForm = new InscriptionForm(utilisateurDAO);
-        // TODO Auto-generated constructor stub
+        
+        
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,6 +35,9 @@ public class Inscription extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		this.daoFactory= DAOFactory.getInstance();
+        this.utilisateurDAO=daoFactory.getUtilisateurDao();
+        this.inscriptionForm = new InscriptionForm(utilisateurDAO);
 		HttpSession session = request.getSession();
 		System.out.println(request.getParameter(CHAMP_PSEUDO));
 		Utilisateur utilisateur=inscriptionForm.creerUtilisateur(request);
